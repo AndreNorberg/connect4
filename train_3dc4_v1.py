@@ -14,20 +14,32 @@ class DQNAgent:
         self.exploration_rate = exploration_rate
         self.batch_size = batch_size
 
+        #self.memory = []
+        #self.model = self.build_model()
         self.memory = []
         self.model = self.build_model()
+        self.optimizer = optim.Adam(self.model.parameters(), lr=self.learning_rate)
+        self.criterion = nn.MSELoss()
 
+#    def build_model(self):
+#        model = nn.Sequential(
+#            nn.Linear(self.state_size, self.hidden_size),
+#            nn.ReLU(),
+#            nn.Linear(self.hidden_size, self.action_size)
+#        )
+#        optimizer = optim.Adam(model.parameters(), lr=self.learning_rate)
+#        criterion = nn.MSELoss()
+#        return model, optimizer, criterion
     def build_model(self):
         model = nn.Sequential(
             nn.Linear(self.state_size, self.hidden_size),
             nn.ReLU(),
             nn.Linear(self.hidden_size, self.action_size)
         )
-        optimizer = optim.Adam(model.parameters(), lr=self.learning_rate)
-        criterion = nn.MSELoss()
-        return model, optimizer, criterion
-
+        return model
+    
     def remember(self, state, action, reward, next_state, done):
+        input_val = state, action, reward, next_state, done
         self.memory.append((state, action, reward, next_state, done))
 
     def act(self, state):

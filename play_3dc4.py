@@ -9,7 +9,8 @@ agent = train_3dc4_v1.DQNAgent(state_size=64, action_size=16, hidden_size=32, le
 
 # Train agent
 for episode in range(1000):
-    state = env.InitializeBoard()
+    state, player = env.InitializeBoard()
+    #print(state)
     done = False
     while not done:
         action = agent.act(state)

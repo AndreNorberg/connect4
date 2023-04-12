@@ -71,7 +71,7 @@ class Connect4:
         else:
             print("Invalid move")
             player[1] += 1
-
+        #print(board)
         return board, player[1]
 
     def CheckWin(self, board, player):
