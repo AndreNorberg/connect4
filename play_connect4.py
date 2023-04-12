@@ -5,20 +5,20 @@ class Connect4:
 
     def InitializeBoard(self):
         board = []
-        player = ['X', 0]
+        player = [1, 0] # 1 = 'X', 0 = number of errors
         for i in range(4):  # 4 layers
             layer = []
             for j in range(4):  # 4 rows
                 row = []
                 for k in range(4):  # 4 columns
-                    row.append('.')
+                    row.append(0)
                 layer.append(row)
             board.append(layer)
         return board, player
 
     def SetPlayer(self, player):
         if player[1] == 0 :
-            player[0] = 'X' if player[0]=='O' else 'O'
+            player[0] = 1 if player[0]==2 else 2
             # player = 'X'  # set the initial player to 'X'
         return player
 
@@ -39,7 +39,7 @@ class Connect4:
         return True
 
     def GetPlayerMove(self, player):
-        move = input("Player " + player[0] + " (" + str(player[1]) + " wrong moves), enter your move (row v, column >): ")
+        move = input("Player " + str(player[0]) + " (" + str(player[1]) + " wrong moves), enter your move (row v, column >): ")
         move = move.strip().split(",")
         print(self.check_all_values(move))
         if len(move) == 2 and self.check_all_values(move):
@@ -57,10 +57,10 @@ class Connect4:
         # print(type(move))
         if isinstance(move, tuple) and len(move) == 2:
             row, column = move
-            if board[3][row][column] == '.':
+            if board[3][row][column] == 0:
                 # move marker downwards as far as it goes
                 for i in range(4) :
-                    if board[i][row][column] == '.' :
+                    if board[i][row][column] == 0 :
                         board[i][row][column] = player[0]
                         player[1] = 0
                         break # for loop is done
@@ -102,7 +102,7 @@ class Connect4:
         for layer in range(4):
             for row in range(4):
                 for column in range(4):
-                    if board[layer][row][column] == '.':
+                    if board[layer][row][column] == 0:
                         return False
         return True
 
@@ -115,7 +115,7 @@ class Connect4:
 
     def main(self):
         board = self.InitializeBoard()
-        player = ['X', 0]
+        player = [1, 0]
         self.PrintBoard(board)
         
         while True:
